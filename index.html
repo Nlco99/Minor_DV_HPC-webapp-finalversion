@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashCycle</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- D3.js CDN -->
+    <script src="https://d3js.org/d3.v7.min.js"></script> 
+    <!--Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <!-- Include Papa Parse library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+     <!-- Color Scale -->
+     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <ul>
+                <li class="profile">
+                    <span class="icon"><i class="bi bi-person-circle"></i></span>
+                </li>
+                <!-- Divider-->
+                <li class="divider"></li>
+
+                <li class="overview" onclick="showSection('overview')">
+                    <span class="icon"><i class="bi bi-clipboard-data"></i></span>
+                </li>
+                
+                <li class="analysis" onclick="showSection('analysis')">
+                    <span class="icon"><i class="bi bi-graph-up"></i></span>
+                </li>
+                <!-- Divider-->
+                <li class="divider"></li>          
+                <li class="settings">
+                    <span class="icon"><i class="bi bi-gear-fill"></i></span>
+                </li>
+                
+                <li class="sign-out">
+                    <span class="icon"><i class="bi bi-box-arrow-right"></i></span>
+                </li>
+            </ul>
+        </div>
+
+         <!-- Main content -->
+         <div id="main">
+            <!-- Content sections -->
+            <div class="content">
+                <!-- Overview section -->
+                 <!-- "section active => first page thats visible when opening the application" -->
+                <div id="overview" class="section active">
+                    <h3>Overview page</h3>
+
+                    <!-- Max prestatie card-->
+                    <div id="max-prestatie" class="card">
+                        <h4>MAX Prestatie</h4>
+                        <p>Lactaat: <span id="lactaat-value"></span></p>
+                        <p>VO2: <span id="vo2-value"></span></p>
+                        <p>HR: <span id="hr-value"></span></p>
+                        <p>Power: <span id="power-value"></span></p>
+                    </div>
+                    <div id="my_dataviz">
+                        <h5>PowervsHr</h5>
+                    </div>
+                </div>
+                <div id="analysis" class="section">
+                        <h3>Analysis page</h3>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

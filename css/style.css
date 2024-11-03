@@ -1,0 +1,138 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 70px;
+    background-color: #333;
+    color: white;
+    height: 90vh;
+    padding-top: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.divider {
+    border-top: 1px solid #575757;
+    padding-top: 10px;
+}
+
+#sidebar ul li:hover {
+    background-color: #575757;
+    cursor: pointer;
+    color: darkorange;
+}
+
+#sidebar ul li .icon {
+    padding-left: 10px;
+}
+
+.profile {
+    margin-bottom: 20px; 
+}
+
+.overview {
+    margin-bottom: 20px;
+}
+
+.analysis {
+    margin-bottom: 250px;
+}
+
+.sign-out {
+    margin-top: 10px;
+}
+
+.icon-class {
+    width: 35px; 
+    height: 35px;
+    vertical-align: middle; 
+}
+
+.icon {
+    font-size: 2rem;
+}
+
+
+/* Main content styles */
+#main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Content sections */
+.content {
+    padding: 20px;
+}
+.section {
+    display: none;
+}
+.section.active {
+    display: block;
+}
+
+#max-prestatie.card {
+    position: absolute;
+    top: 40px;
+    left: 105px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 220px;
+}
+
+#my_dataviz {
+    position: absolute;
+    top: 200px; /* Adjust this value based on the height of the #max-prestatie card */
+    left: 105px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 460px; /* Adjust the width as needed */
+}
+
+#legenda.card {
+    position: absolute;
+    top: 40px;
+    right: 150px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 220px;
+}
