@@ -113,7 +113,7 @@ body {
     width: 220px;
 }
 
-#my_dataviz {
+#barchart-VO2-VCO2 {
     position: absolute;
     top: 200px; /* Adjust this value based on the height of the #max-prestatie card */
     left: 105px;
@@ -125,7 +125,7 @@ body {
     width: 460px; /* Adjust the width as needed */
 }
 
-#my_dataviz2 {
+#linegraph-La-Power-HR {
     position: absolute;
     top: 200px; /* Adjust this value based on the height of the #max-prestatie card */
     left: 600px;
