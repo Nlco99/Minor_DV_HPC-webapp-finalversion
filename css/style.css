@@ -125,6 +125,18 @@ body {
     width: 460px; /* Adjust the width as needed */
 }
 
+#my_dataviz2 {
+    position: absolute;
+    top: 200px; /* Adjust this value based on the height of the #max-prestatie card */
+    left: 600px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 460px; /* Adjust the width as needed */
+}
+
 #legenda.card {
     position: absolute;
     top: 40px;
