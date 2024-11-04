@@ -51,23 +51,67 @@
                 <!-- Overview section -->
                  <!-- "section active => first page thats visible when opening the application" -->
                 <div id="overview" class="section active">
-                    <h3>Overview page</h3>
 
                     <!-- Max prestatie card-->
                     <div id="max-prestatie" class="card">
-                        <h4>MAX Prestatie</h4>
-                        <p>Lactaat: <span id="lactaat-value"></span></p>
-                        <p>VO2: <span id="vo2-value"></span></p>
-                        <p>HR: <span id="hr-value"></span></p>
-                        <p>Power: <span id="power-value"></span></p>
+                        <div class="header">
+                            <h4>Laatste Sessie</h4>
+                            <div class="dropdown">
+                                <button class="dropbtn">
+                                    31 mei 2024  <span class="icon"><i class="bi bi-arrow-right"></i></i></span>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">Option 1</a>
+                                    <a href="#">Option 2</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="divider"></p>
+
+                        <div class="max-values">
+                            <div class="max-value">
+                                <p class="max-titles"><small>Lactaat</small></p>
+                                <p><h2><strong>
+                                    <span id="lactaat-value"></span></strong>
+                                    <span class="unit">mmol/L</span>
+                                </h2></p>
+                            </div>
+                            
+                            <div class="max-value">
+                                <p class="max-titles"><small>HR</small></p>
+                                <p><h2>
+                                    <strong><span id="hr-value"></span></strong>
+                                    <span class="unit">bpmn</span>
+                                </h2></p>
+                            </div>
+                            <div class="max-value">
+                                <p class="max-titles"><small>Power</small></p>
+                                <p><h2>
+                                    <strong><span id="power-value"></span></strong>
+                                    <span class="unit">bpmn</span>
+                                </h2></p>
+                            </div>
+                            <div class="max-value">
+                                <p class="max-titles"><small>VO2</small></p>
+                                <p><h2><strong>
+                                    <span id="vo2-value"></span></strong>
+                                    <span class="unit">ml/kg/min</span>
+                                </h2></p>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div id="barchart-VO2-VCO2">
                         <h5>VO2 vs VCO2</h5>
                     </div>
-                    <div id="linegraph-La-Power-HR">
-                        <h5>Lactate vs Power and HR</h5>
+                    <!-- <div id="legendaPrestatie" class="card">
+                        <h4>Prestatie zones</h4>
+                    </div> -->
+
+                    <div id="linegraph-HR-Power">
+                        <h4>Line graph HR vs Power</h4>
                     </div>
-                    
                     
                 </div>
                 <div id="analysis" class="section">

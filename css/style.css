@@ -10,6 +10,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    background-color: #c9cbcd;
 }
 .container {
     display: flex;
@@ -19,13 +20,13 @@ body {
 /* Sidebar */
 #sidebar {
     width: 70px;
-    background-color: #333;
+    background-color: #434d53;
     color: white;
-    height: 90vh;
+    height: 100vh;
     padding-top: 20px;
-    margin-left: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
+    margin-left: 0px;
+    margin-top: 0px;
+    border-radius: 0px;
 }
 
 #sidebar ul {
@@ -42,11 +43,9 @@ body {
 
 .divider {
     border-top: 1px solid #575757;
-    padding-top: 10px;
 }
 
 #sidebar ul li:hover {
-    background-color: #575757;
     cursor: pointer;
     color: darkorange;
 }
@@ -64,7 +63,7 @@ body {
 }
 
 .analysis {
-    margin-bottom: 250px;
+    margin-bottom: 500px;
 }
 
 .sign-out {
@@ -100,51 +99,135 @@ body {
 .section.active {
     display: block;
 }
-
+/*Max prestatie */
 #max-prestatie.card {
     position: absolute;
-    top: 40px;
-    left: 105px;
-    padding: 20px;
+    top: 20px;
+    right: 105px;
+    padding: 10px;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 220px;
+    width: 650px;
 }
 
+#max-prestatie .max-titles {
+    color:#767474;
+}
+.unit {
+    font-weight: normal;
+    font-size: 0.6em; /* Adjust the size as needed */
+    margin-left: 0px; /* Add some space between the value and the unit */
+    color: #424242;
+}
+
+#max-prestatie .max-values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#max-prestatie .max-value {
+    flex: 1;
+    text-align: left;
+    margin: 0 5px;
+}
+
+/* Dropdown Button */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: white;
+    color: black;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.dropbtn i {
+    margin-left: 5px;
+    
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 5px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #575757;
+}
+/*Bar chart */
 #barchart-VO2-VCO2 {
     position: absolute;
-    top: 200px; /* Adjust this value based on the height of the #max-prestatie card */
-    left: 105px;
+    top: 20px; /* Adjust this value based on the height of the #max-prestatie card */
+    left: 100px;
     border: 1px solid #ccc;
     padding: 10px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 460px; /* Adjust the width as needed */
+    width: 850px; /* Adjust the width as needed */
 }
 
-#linegraph-La-Power-HR {
+/*linegraph-HR-Power */
+#linegraph-HR-Power {
     position: absolute;
-    top: 200px; /* Adjust this value based on the height of the #max-prestatie card */
-    left: 600px;
+    bottom: 20px; /* Adjust this value based on the height of the #max-prestatie card */
+    right: 10px;
     border: 1px solid #ccc;
     padding: 10px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 460px; /* Adjust the width as needed */
+    width: 900px; /* Adjust the width as needed */
 }
 
-#legenda.card {
+/*Legenda Prestatie*/
+#legendaPrestatie.card {
     position: absolute;
-    top: 40px;
-    right: 150px;
+    top: 370px;
+    height: 340px;
+    right: 15px;
     padding: 20px;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 220px;
+    width: 500px;
 }
