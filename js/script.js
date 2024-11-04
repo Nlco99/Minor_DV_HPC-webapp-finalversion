@@ -340,4 +340,4 @@ fetchMaxValues();
 fetchData(lineGraphLAPowerHR);
 
 // Fetch data and create the bar chart
-fetchData(barchartVO2VCO2);
+fetchData(lineGraphVO2VCO2);
