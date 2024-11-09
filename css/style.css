@@ -11,11 +11,14 @@ body {
     padding: 0;
     display: flex;
     background-color: #c9cbcd;
+    /* background: linear-gradient(to bottom right, #5e707a, #df983a); */
 }
 .container {
     display: flex;
     width: 100%;
 }
+
+
 
 /* Sidebar */
 #sidebar {
@@ -63,7 +66,7 @@ body {
 }
 
 .analysis {
-    margin-bottom: 500px;
+    margin-bottom: 320px;
 }
 
 .sign-out {
@@ -103,14 +106,14 @@ body {
 #max-prestatie.card {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 45px;
     padding: 10px;
-    background-color: white;
+    background-color: #e8eaeb;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 580px;
-    height: 467px;
+    width: 420px;
+    height: 250px;
 }
 
 #max-prestatie .max-titles {
@@ -118,7 +121,7 @@ body {
 }
 .unit {
     font-weight: normal;
-    font-size: 0.6em; /* Adjust the size as needed */
+    font-size: 0.5em; /* Adjust the size as needed */
     margin-left: 0px; /* Add some space between the value and the unit */
     color: #424242;
 }
@@ -148,7 +151,7 @@ body {
 }
 
 .dropbtn {
-    background-color: white;
+    background-color: #e8eaeb;
     color: black;
     padding: 5px;
     font-size: 16px;
@@ -157,11 +160,11 @@ body {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    border: 1px solid #ccc;
 }
 
 .dropbtn i {
     margin-left: 5px;
-    
 }
 
 .dropdown-content {
@@ -183,7 +186,7 @@ body {
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #d8d7d7;
 }
 
 .dropdown:hover .dropdown-content {
@@ -191,55 +194,136 @@ body {
 }
 
 .dropdown:hover .dropbtn {
-    background-color: #575757;
+    background-color: lightsalmon;
 }
+
+#zoomlevel{
+    position: absolute;
+    top: 15px;
+    left: 700px;
+}
+
+
 /*Bar chart */
 #barchart-VO2-VCO2 {
     position: absolute;
-    bottom: 7px; /* Adjust this value based on the height of the #max-prestatie card */
-    right: 10px;
-    border: 1px solid #ccc;
+    bottom: 225px; 
+    right: 20px;
+    border-top: 25px solid #303030;
+    border-right: 30px solid #303030;
+    border-left: 25px solid #303030;
+    border-bottom: none; /* Remove the border on the bottom */
     padding: 5px;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 13px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 900px; /* Adjust the width as needed */
+}
+.barVO2:hover {
+    stroke: black;
+    cursor: pointer;
+}
+.barVCO2:hover {
+    stroke: black;
+    cursor: pointer;
+}
+/*difference-barchart-VO2-VCO2*/
+#difference-barchart-VO2-VCO2 {
+    position: absolute;
+    bottom: 7px; 
+    right: 20px;
+    border-top: none;
+    border-bottom: 25px solid #303030;
+    border-right: 30px solid #303030;
+    border-left: 25px solid #303030;
+    padding: 5px;
+    background-color: white;
+    border-radius: 13px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.barDifference:hover {
+    stroke: black;
+    cursor: pointer;
 }
 
 /*linegraph-HR-Power */
 #linegraph-HR-Power {
-    position: absolute;
-    top: 90px; /* Adjust this value based on the height of the #max-prestatie card */
-    left: 73px;
-    border: 1px solid #ccc;
+    position: relative;
+    top: 5px; 
+    left: -16px;
+    border: 25px solid #303030;
     padding: 10px;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 930px; /* Adjust the width as needed */
+    width: 700px; 
+}
+/*Hover interaction*/
+.dotHR:hover {
+    stroke: black;
+    cursor: pointer;
+}
+.dotPower:hover {
+    stroke: black;
+    cursor: pointer;
+}
+.icon-heart {
+    color: white; 
+    font-size: 20px; 
+}
+.icon-power {
+    color: white; 
+    font-size: 20px; 
+}
+.icon-lung-linechart {
+    color: white; 
+    font-size: 22px; 
+}
+.icon-lung-barchart {
+    color: white; 
+    font-size: 22px; 
 }
 
+/*-------------------------------*/
 #linegraph-Rf-VT {
-    position: absolute;
-    bottom: 8px; /* Adjust this value based on the height of the #max-prestatie card */
-    left: 73px;
-    border: 1px solid #ccc;
+    position: relative;
+    bottom: -10px; 
+    left: -16px;
+    border: 25px solid #303030;
     padding: 10px;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 930px; /* Adjust the width as needed */
+    width: 700px; 
+}
+/*Hover interaction */
+.dotVT:hover {
+    stroke: black;
+    cursor: pointer;
+}
+.dotRf:hover {
+    stroke: black;
+    cursor: pointer;
 }
 
 #legendaPrestatie.card {
     position: absolute;
     top: 20px;
-    height: 466px;
-    right: 610px;
+    height: 250px;
+    right: 475px;
     padding: 20px;
-    background-color: white;
+    background-color: #e8eaeb;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 250px;
 }
+
+/*-------------------------------*/
+/* #linegraph-HR-Power-Old {
+    width: 700px;
+    height: 300px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+} */
