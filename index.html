@@ -54,11 +54,9 @@
                     <h2>Hallo, John</h2>
                     <p>Your Data, Your Ride, Your Progress</p>
 
-                    <div id="zoomlevel" class="dropdown">
-                        <button class="dropbtn">
-                            Tijd<span class="icon"><i class="bi bi-plus-slash-minus"></i></i></span>
-                        </button>
-                        <div class="dropdown-content">
+                    <div class="zoom-dropdown">
+                        <button class="dropbtn" id="zoomLevelButton">Tijd <i class="bi bi-plus-slash-minus plus-min-icon"></i></button>
+                        <div class="zoom-dropdown-content">
                             <a href="#" id="zoomLevel1">1min</a>
                             <a href="#" id="zoomLevel2">5min</a>
                             <a href="#" id="zoomLevel3">10min</a>
@@ -69,17 +67,21 @@
                     <!-- Max prestatie card-->
                     <div id="max-prestatie" class="card">
                         <div class="header">
-                            <h4>Laatste Sessie - MAX Prestatie</h4>
+                            <i class="bi bi-star-fill star-icon"></i><h4>MAXIMALE Prestatie</h4>
                             <div class="dropdown">
                                 <button class="dropbtn">
-                                    31 mei 2024  <span class="icon"><i class="bi bi-arrow-right"></i></i></span>
+                                    31 mei 2024  <span class="icon"><i class="bi bi-calendar2 calendar-icon"></i></span>
                                 </button>
+
                                 <div class="dropdown-content">
                                     <a href="#" id="session31Mei24">31 Mei '24</a>
                                     <a href="#" id="session28Jan24">28 Jan '24</a>
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <hr>
+                        <br>
                         <br>
                         <p class="divider"></p>
 
@@ -125,21 +127,14 @@
                         </div> -->
                         <!-- <br>
                         <p class="divider"></p> -->
-                        <br>
-                        <div class="personal-info">
-                            <p><strong>Personal data at session</strong></p>
-                            <p>Weight: <span id="weight-value"></span></p>
-                            <p>Height: <span id="height-value"></span></p>
-                            <p>Age: <span id="age-value"></span></p>
-                        </div>
                     </div>
                     
                     
 
                     <!-- waardes moet nog gefetched worden -->
-                    <div id="legendaPrestatie" class="card">
+                    <!-- <div id="legendaPrestatie" class="card">
                         <h6>Prestatie zones</h6>
-                        <!-- <div class="ERGLICHT">
+                        <div class="ERGLICHT">
                             <p><strong>ERG LICHT</strong></p>
                             <p class="hr">Hartslag: 67-108 bpm</p>
                             <p class="power">Power: 0-80 W</p>
@@ -167,8 +162,8 @@
                             <p>MAX</p>
                             <p class="hr">Hartslag: 178-186 bpm</p>
                             <p class="power">Power: 200-240 W</p>
-                        </div> -->
-                    </div>
+                        </div> 
+                    </div>  -->
 
                     <!-------------------------------------------------->
                     <!-- GRAPHS -->
@@ -188,8 +183,27 @@
                         <!-- Difference VO2-VCO2-->
                     </div>
                     <!------------------------------------------------->
-                    
                     <!-- <div id="linegraph-HR-Power-Old"></div> -->
+                    <!------------------------------------------------->
+
+                    <div id="athleteInfo" class="card">
+                        <div class="header">
+                            <span><i class="bi bi-card-text card-icon"></i><h4>Persoonlijke sessie-gegevens</h4></span>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <p id="leeftijd-value"></p>
+                        <p id="lengte-value"></p>
+                        <p id="gewicht-value"></p>
+                        <br>
+                        <hr>
+                        <br>
+                        <p id="testduur-value"></p>
+                        <p id="testtijd-value"></p>
+                        <p id="ergometer-value"></p>
+                    </div>
+
 
                 </div>
                 <div id="analysis" class="section">

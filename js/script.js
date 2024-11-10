@@ -8,51 +8,6 @@ function showSection(sectionId) {
     document.getElementById(sectionId).classList.add('active');
 }
 
-// // Fetch maximum values from CSV file
-// async function fetchMaxValues() {
-//     const response = await fetch('data/results-person1.csv');
-//     const data = await response.text();
-
-//     Papa.parse(data, {
-//         header: false,
-//         skipEmptyLines: true,
-//         complete: function(results) {
-//             const rows = results.data.slice(2); // Skip the first 2 lines (header and units)
-    
-//             let maxLactaat = 0, maxVO2 = 0, maxVCO2 = 0, maxHR = 0, maxPower = 0, maxRf = 0, maxVT = 0;
-    
-//             rows.forEach(row => {
-//                 const lactaat = parseFloat(row[9].replace(',', '.'));
-//                 const vo2 = parseFloat(row[4].replace(',', '.'));
-//                 const vco2 = parseFloat(row[5].replace(',', '.'));
-//                 const hr = parseFloat(row[7].replace(',', '.'));
-//                 const power = parseFloat(row[8].replace(',', '.'));
-//                 const rf = parseFloat(row[1].replace(',', '.'));
-//                 const vt = parseFloat(row[2].replace(',', '.'));
-    
-//                 if (lactaat > maxLactaat) maxLactaat = lactaat;
-//                 if (vo2 > maxVO2) maxVO2 = vo2;
-//                 if (vco2 > maxVCO2) maxVCO2 = vco2;
-//                 if (hr > maxHR) maxHR = hr;
-//                 if (power > maxPower) maxPower = power;
-//                 if (rf > maxRf) maxRf = rf;
-//                 if (vt > maxVT) maxVT = vt;
-//             });
-    
-//             console.log('Max Values:', { maxLactaat, maxVO2, maxVCO2, maxHR, maxPower, maxRf, maxVT }); // Debugging line
-    
-//             // Round up to the nearest tenth
-//             const roundToTenth = (value) => Math.ceil(value * 10) / 10;
-    
-//             document.getElementById('lactaat-value').textContent = `${roundToTenth(maxLactaat)} `;
-//             document.getElementById('vo2-value').textContent = `${roundToTenth(maxVO2)} `;
-//             document.getElementById('hr-value').textContent = `${roundToTenth(maxHR)} `;
-//             document.getElementById('power-value').textContent = `${roundToTenth(maxPower)} `;
-//         }
-//     });
-// }
-// fetchMaxValues();
-
 async function fetchData(callback) {
     const response = await fetch('data/results-person1.csv');
     const data = await response.text();
@@ -376,8 +331,9 @@ function lineGraphPowerHR(data) {
         .call(d3.axisRight(yRight));
 
     // Draw the smooth line for HR
-    svg.append("path")
+    var hrLine = svg.append("path")
         .datum(data)
+        .attr("class", "hr-line")
         .attr("fill", "none")
         .attr("stroke", "#fb2618")
         .attr("stroke-width", 1.5)
@@ -385,13 +341,14 @@ function lineGraphPowerHR(data) {
             .x(function(d) { return x(d.time); })
             .y(function(d) { return yLeft(d.HR); })
             .curve(d3.curveMonotoneX) // Apply smoothing
-        );
+    );
 
     // Draw the smooth line for Power
-    svg.append("path")
+    var powerLine = svg.append("path")
         .datum(data)
+        .attr("class", "power-line")
         .attr("fill", "none")
-        .attr("stroke", "#2f79ce")
+        .attr("stroke", "#b8b800")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
             .x(function(d) { return x(d.time); })
@@ -454,53 +411,10 @@ function lineGraphPowerHR(data) {
         .attr("cx", function(d) { return x(d.time); })
         .attr("cy", function(d) { return yRight(d.Power); })
         .attr("r", 3)
-        .attr("fill", "#2f79ce")
+        .attr("fill", "#b8b800")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
-
-
-    // Add a circle to the div on the border
-    d3.select("#linegraph-HR-Power")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 23)
-        .style("position", "absolute")
-        .style("bottom", "-25") 
-        .style("left", "45") 
-        .append("circle")
-        .attr("cx", 10)
-        .attr("cy", 10)
-        .attr("r", 9)
-        .attr("fill", "lightgrey");
-    
-    // Add a circle to the div on the border
-    d3.select("#linegraph-HR-Power")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 23)
-        .style("position", "absolute")
-        .style("bottom", "-25") 
-        .style("left", "90") 
-        .append("circle")
-        .attr("cx", 10)
-        .attr("cy", 10)
-        .attr("r", 9)
-        .attr("fill", "lightgrey");
-    
-    // Add a circle to the div on the border
-    d3.select("#linegraph-HR-Power")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 23)
-        .style("position", "absolute")
-        .style("bottom", "-25") 
-        .style("left", "135") 
-        .append("circle")
-        .attr("cx", 10)
-        .attr("cy", 10)
-        .attr("r", 9)
-        .attr("fill", "lightgrey");
     
     // Add an icon to the div on the border
     d3.select("#linegraph-HR-Power")
@@ -526,10 +440,10 @@ function lineGraphPowerHR(data) {
         
     //---------------------------------------
     // Add legend
-    svg.append("circle").attr("cx", width - 500).attr("cy", 10).attr("r", 6).style("fill", "#fb2618");
-    svg.append("circle").attr("cx", width - 500).attr("cy", 30).attr("r", 6).style("fill", "#2f79ce");
-    svg.append("text").attr("x", width - 490).attr("y", 10).text("HR").style("font-size", "12px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", width - 490).attr("y", 30).text("Power").style("font-size", "12px").attr("alignment-baseline", "middle");
+    svg.append("circle").attr("cx", width - 500).attr("cy", 10).attr("r", 6).style("fill", "#fb2618").attr("class", "hr-legend");
+    svg.append("circle").attr("cx", width - 500).attr("cy", 30).attr("r", 6).style("fill", "#b8b800").attr("class", "power-legend");
+    svg.append("text").attr("x", width - 490).attr("y", 12).text("HR").style("font-size", "12px").attr("alignment-baseline", "middle").attr("class", "hr-legend");
+    svg.append("text").attr("x", width - 490).attr("y", 32).text("Power").style("font-size", "12px").attr("alignment-baseline", "middle").attr("class", "power-legend");
 
     // Add Y axis label at the top left of the x-axis
     svg.append("text")
@@ -561,6 +475,80 @@ function lineGraphPowerHR(data) {
         .style("fill", "black")
         .text("Tijd (min)");
 
+    //TOGGLE BUTTONS
+    // Add a rectangle button for HR control
+    var hrButton = d3.select("#linegraph-HR-Power")
+        .append("svg")
+        .attr("width", 60)
+        .attr("height", 22)
+        .style("position", "absolute")
+        .style("bottom", "-23px") 
+        .style("left", "45px")
+        .style("border-radius", "10px")
+        .style("cursor", "pointer")
+        .on("click", function() {
+            var isActive = d3.select(this).select("rect").classed("active");
+            d3.select(this).select("rect")
+                .classed("active", !isActive)
+                .attr("fill", isActive ? "grey" : "red");
+            d3.select(this).select("text")
+                .text(isActive ? "OFF" : "ON");
+            d3.selectAll('.dotHR').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.hr-line').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.hr-legend').style('display', isActive ? 'none' : 'block');
+        });
+
+    hrButton.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 60)
+        .attr("height", 30)
+        .attr("fill", "red")
+        .classed("active", true);
+
+    hrButton.append("text")
+        .attr("x", 30)
+        .attr("y", 18)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text("ON");
+
+    // Add a rectangle button for Power control
+    var powerButton = d3.select("#linegraph-HR-Power")
+        .append("svg")
+        .attr("width", 60)
+        .attr("height", 22)
+        .style("position", "absolute")
+        .style("bottom", "-23px")
+        .style("left", "120px")
+        .style("border-radius", "10px")
+        .style("cursor", "pointer")
+        .on("click", function() {
+            var isActive = d3.select(this).select("rect").classed("active");
+            d3.select(this).select("rect")
+                .classed("active", !isActive)
+                .attr("fill", isActive ? "grey" : "#b8b800");
+            d3.select(this).select("text")
+                .text(isActive ? "OFF" : "ON");
+            d3.selectAll('.dotPower').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.power-line').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.power-legend').style('display', isActive ? 'none' : 'block');
+        });
+
+    powerButton.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 60)
+        .attr("height", 30)
+        .attr("fill", "#b8b800")
+        .classed("active", true);
+
+    powerButton.append("text")
+        .attr("x", 30)
+        .attr("y", 18)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text("ON");
 }
 // fetchDataEveryMinute(lineGraphPowerHR);
 
@@ -614,22 +602,12 @@ function lineGraphRfVT(data) {
         .attr("transform", `translate(${width},0)`)
         .call(d3.axisRight(yRight));
   
-    // // Add the points for VT
-    // svg.selectAll(".dotVT")
-    //     .data(data)
-    //     .enter()
-    //     .append("circle")
-    //     .attr("class", "dotVT")
-    //     .attr("cx", d => x(d.time))
-    //     .attr("cy", d => yLeft(d.VT))
-    //     .attr("r", 3)
-    //     .attr("fill", "blue");
-  
     // Draw the smooth line for VT
     svg.append("path")
         .datum(data)
+        .attr("class", "vt-line")
         .attr("fill", "none")
-        .attr("stroke", "blue")
+        .attr("stroke", "green")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
             .x(d => x(d.time))
@@ -643,11 +621,12 @@ function lineGraphRfVT(data) {
     .y0(height)
     .y1(d => yLeft(d.VT))
     .curve(d3.curveMonotoneX); // Apply smoothing
-  
+
     // Draw the area for VT
     svg.append("path")
     .datum(data)
-    .attr("fill", "lightblue")
+    .attr("class", "vt-area")
+    .attr("fill", "lightgreen")
     .attr("opacity", 0.5)
     .attr("d", areaVT);
     
@@ -655,8 +634,9 @@ function lineGraphRfVT(data) {
     // Draw the smooth line for Rf
     svg.append("path")
         .datum(data)
+        .attr("class", "rf-line")
         .attr("fill", "none")
-        .attr("stroke", "green")
+        .attr("stroke", "purple")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
             .x(d => x(d.time))
@@ -664,30 +644,20 @@ function lineGraphRfVT(data) {
             .curve(d3.curveMonotoneX) // Apply smoothing
         );
   
-    // // Add the points for Rf
-    // svg.selectAll(".dotRf")
-    //     .data(data)
-    //     .enter()
-    //     .append("circle")
-    //     .attr("class", "dotRf")
-    //     .attr("cx", d => x(d.time))
-    //     .attr("cy", d => yRight(d.Rf))
-    //     .attr("r", 3)
-    //     .attr("fill", "green");
-  
-      // Define the area for Rf
-      const areaRf = d3.area()
-          .x(d => x(d.time))
-          .y0(height)
-          .y1(d => yRight(d.Rf))
-          .curve(d3.curveMonotoneX); // Apply smoothing
-  
-      // Draw the area for Rf
-      svg.append("path")
-          .datum(data)
-          .attr("fill", "lightgreen")
-          .attr("opacity", 0.5)
-          .attr("d", areaRf);
+    // Define the area for Rf
+    const areaRf = d3.area()
+        .x(d => x(d.time))
+        .y0(height)
+        .y1(d => yRight(d.Rf))
+        .curve(d3.curveMonotoneX); // Apply smoothing
+    // Draw the area for Rf
+    svg.append("path")
+        .datum(data)
+        .attr("class", "rf-area")
+        .attr("fill", "#F26DFF")
+        .attr("opacity", 0.5)
+        .attr("d", areaRf);
+
     //------------------------------------------------------------------------------
      // Create a tooltip
      var Tooltip = d3.select("#linegraph-Rf-VT")
@@ -735,7 +705,7 @@ function lineGraphRfVT(data) {
         .attr("cx", function(d) { return x(d.time); })
         .attr("cy", function(d) { return yLeft(d.VT); })
         .attr("r", 3)
-        .attr("fill", "blue")
+        .attr("fill", "green")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
@@ -749,20 +719,20 @@ function lineGraphRfVT(data) {
         .attr("cx", function(d) { return x(d.time); })
         .attr("cy", function(d) { return yRight(d.Rf); })
         .attr("r", 3)
-        .attr("fill", "green")
+        .attr("fill", "purple")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
 
-      //----------------------------------------------------
+    //----------------------------------------------------
       // Call the addPrestatiezones function
-      addPrestatiezones(svg, x, height);
-      //----------------------------------------------------
+    addPrestatiezones(svg, x, height);
+    //----------------------------------------------------
       // Add legend
-      svg.append("circle").attr("cx", width - 760).attr("cy", 30).attr("r", 6).style("fill", "blue");
-      svg.append("circle").attr("cx", width - 760).attr("cy", 60).attr("r", 6).style("fill", "green");
-      svg.append("text").attr("x", width - 740).attr("y", 30).text("VT").style("font-size", "15px").attr("alignment-baseline", "middle");
-      svg.append("text").attr("x", width - 740).attr("y", 60).text("Rf").style("font-size", "15px").attr("alignment-baseline", "middle");
+    svg.append("circle").attr("cx", width - 500).attr("cy", 10).attr("r", 6).style("fill", "#0c9e0c").attr("class", "vt-legend");
+    svg.append("circle").attr("cx", width - 500).attr("cy", 30).attr("r", 6).style("fill", "#a814a8").attr("class", "rf-legend");
+    svg.append("text").attr("x", width - 490).attr("y", 12).text("VT").style("font-size", "12px").attr("alignment-baseline", "middle").attr("class", "vt-legend");
+    svg.append("text").attr("x", width - 490).attr("y", 32).text("Rf").style("font-size", "12px").attr("alignment-baseline", "middle").attr("class", "rf-legend");
 
     // Add Y axis label at the top left of the x-axis
     svg.append("text")
@@ -792,46 +762,6 @@ function lineGraphRfVT(data) {
         .style("font-size", "12px")        
         .style("font-weight", "bold")
         .text("Tijd (min)");
-
-    // Add a circle to the div on the border
-    d3.select("#linegraph-Rf-VT")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 23)
-        .style("position", "absolute")
-        .style("bottom", "-25") 
-        .style("left", "45") 
-        .append("circle")
-        .attr("cx", 10)
-        .attr("cy", 10)
-        .attr("r", 9)
-        .attr("fill", "lightgrey");
-
-    d3.select("#linegraph-Rf-VT")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 23)
-        .style("position", "absolute")
-        .style("bottom", "-25") 
-        .style("left", "90") 
-        .append("circle")
-        .attr("cx", 10)
-        .attr("cy", 10)
-        .attr("r", 9)
-        .attr("fill", "lightgrey");
-
-    d3.select("#linegraph-Rf-VT")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 23)
-        .style("position", "absolute")
-        .style("bottom", "-25") 
-        .style("left", "135") 
-        .append("circle")
-        .attr("cx", 10)
-        .attr("cy", 10)
-        .attr("r", 9)
-        .attr("fill", "lightgrey");
     
     // Add an icon to the div on the border
     d3.select("#linegraph-Rf-VT")
@@ -841,6 +771,83 @@ function lineGraphRfVT(data) {
         .style("top", "-32px") 
         .style("left", "0px") 
         .html('<i class="bi bi-lungs-fill icon-lung-linechart"></i>');
+
+    //TOGGLE BUTTONS
+    // Add a rectangle button for VT control
+    var vtButton = d3.select("#linegraph-Rf-VT")
+        .append("svg")
+        .attr("width", 60)
+        .attr("height", 22)
+        .style("position", "absolute")
+        .style("bottom", "-23px") // Adjusted position
+        .style("left", "45px")
+        .style("border-radius", "10px")
+        .style("cursor", "pointer")
+        .on("click", function() {
+            var isActive = d3.select(this).select("rect").classed("active");
+            d3.select(this).select("rect")
+                .classed("active", !isActive)
+                .attr("fill", isActive ? "grey" : "#0c9e0c");
+            d3.select(this).select("text")
+                .text(isActive ? "OFF" : "ON");
+            d3.selectAll('.dotVT').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.vt-line').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.vt-area').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.vt-legend').style('display', isActive ? 'none' : 'block');
+        });
+
+    vtButton.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 60)
+        .attr("height", 30)
+        .attr("fill", "#0c9e0c")
+        .classed("active", true);
+
+    vtButton.append("text")
+        .attr("x", 30)
+        .attr("y", 18)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text("ON");
+
+    // Add a rectangle button for Rf control
+    var rfButton = d3.select("#linegraph-Rf-VT")
+        .append("svg")
+        .attr("width", 60)
+        .attr("height", 22)
+        .style("position", "absolute")
+        .style("bottom", "-23px") // Adjusted position
+        .style("left", "120px")
+        .style("border-radius", "10px")
+        .style("cursor", "pointer")
+        .on("click", function() {
+            var isActive = d3.select(this).select("rect").classed("active");
+            d3.select(this).select("rect")
+                .classed("active", !isActive)
+                .attr("fill", isActive ? "grey" : "#a814a8");
+            d3.select(this).select("text")
+                .text(isActive ? "OFF" : "ON");
+            d3.selectAll('.dotRf').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.rf-line').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.rf-area').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.rf-legend').style('display', isActive ? 'none' : 'block');
+        });
+
+    rfButton.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 60)
+        .attr("height", 30)
+        .attr("fill", "#a814a8")
+        .classed("active", true);
+
+    rfButton.append("text")
+        .attr("x", 30)
+        .attr("y", 18)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text("ON");
         
 }
 // fetchDataEveryMinute(lineGraphRfVT);
@@ -1015,11 +1022,24 @@ function barchartVO2VCO2(data) {
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
 
+     // Add bars for the difference with tooltip
+     svg.selectAll(".barDifference")
+     .data(formattedData)
+     .enter()
+     .append("rect")
+     .attr("class", "barDifference")
+     .attr("x", d => x(d.time))
+     .attr("y", d => yLeft(Math.max(0, d.difference)))
+     .attr("width", x.bandwidth())
+     .attr("height", d => Math.abs(yLeft(d.difference) - yLeft(0)))
+     .attr("fill", d => d.difference > 0 ? "#408ce3" : "#fe8d09")
+     
+
     // Add legend
-    svg.append("circle").attr("cx", width - 780).attr("cy", 20).attr("r", 6).style("fill", "#408ce3");
-    svg.append("circle").attr("cx", width - 780).attr("cy", 50).attr("r", 6).style("fill", "#fe8d09");
-    svg.append("text").attr("x", width - 760).attr("y", 20).text("VO2").style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", width - 760).attr("y", 50).text("VCO2").style("font-size", "15px").attr("alignment-baseline", "middle");
+    svg.append("circle").attr("cx", width - 613).attr("cy", 50).attr("r", 6).style("fill", "#408ce3").attr("class", "vo2-legend");
+    svg.append("circle").attr("cx", width - 613).attr("cy", 80).attr("r", 6).style("fill", "#fe8d09").attr("class", "vco2-legend");
+    svg.append("text").attr("x", width - 605).attr("y", 82).text("VCO2").style("font-size", "12px").attr("alignment-baseline", "middle").attr("class", "vco2-legend");
+    svg.append("text").attr("x", width - 605).attr("y", 52).text("VO2").style("font-size", "12px").attr("alignment-baseline", "middle").attr("class", "vo2-legend");
 
     // Add Y axis label
     svg.append("text")
@@ -1047,46 +1067,6 @@ function barchartVO2VCO2(data) {
         .style("font-weight", "bold")
         .text("Tijd(min)");
     
-    // Add a circle to the div on the border
-    d3.select("#barchart-VO2-VCO2")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 40) // Increase height to ensure visibility
-        .style("position", "absolute")
-        .style("top", "10px") 
-        .style("right", "-34px") 
-        .append("circle")
-        .attr("cx", 20) // Center the circle within the SVG
-        .attr("cy", 20) // Center the circle within the SVG
-        .attr("r", 10) // Increase radius for better visibility
-        .attr("fill", "lightgrey");
-
-    d3.select("#barchart-VO2-VCO2")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 40) // Increase height to ensure visibility
-        .style("position", "absolute")
-        .style("top", "70px") 
-        .style("right", "-34px") 
-        .append("circle")
-        .attr("cx", 20) // Center the circle within the SVG
-        .attr("cy", 20) // Center the circle within the SVG
-        .attr("r", 10) // Increase radius for better visibility
-        .attr("fill", "lightgrey");
-    
-    d3.select("#barchart-VO2-VCO2")
-        .append("svg")
-        .attr("width", 40)
-        .attr("height", 40) // Increase height to ensure visibility
-        .style("position", "absolute")
-        .style("top", "130px") 
-        .style("right", "-34px") 
-        .append("circle")
-        .attr("cx", 20) // Center the circle within the SVG
-        .attr("cy", 20) // Center the circle within the SVG
-        .attr("r", 10) // Increase radius for better visibility
-        .attr("fill", "lightgrey");
-    
     // Add an icon to the div on the border
     d3.select("#barchart-VO2-VCO2")
         .append("div")
@@ -1095,6 +1075,80 @@ function barchartVO2VCO2(data) {
         .style("top", "-32px") 
         .style("left", "0px") 
         .html('<i class="bi bi-lungs-fill icon-lung-barchart"></i>');
+    
+    /// Add a rectangle button for VO2 control
+    var vo2Button = d3.select("#barchart-VO2-VCO2")
+        .append("svg")
+        .attr("width", 60)
+        .attr("height", 20)
+        .style("position", "absolute")
+        .style("top", "-22px") // Adjusted position
+        .style("right", "120px")
+        .style("border-radius", "10px")
+        .style("cursor", "pointer")
+        .on("click", function() {
+            var isActive = d3.select(this).select("rect").classed("active");
+            d3.select(this).select("rect")
+                .classed("active", !isActive)
+                .attr("fill", isActive ? "grey" : "#408ce3");
+            d3.select(this).select("text")
+                .text(isActive ? "OFF" : "ON");
+            d3.selectAll('.barVO2').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.vo2-legend').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.barDifference').filter(d => d.difference > 0).style('display', isActive ? 'none' : 'block');
+        });
+
+    vo2Button.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 60)
+        .attr("height", 30)
+        .attr("fill", "#408ce3")
+        .classed("active", true);
+
+    vo2Button.append("text")
+        .attr("x", 30)
+        .attr("y", 17)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text("ON");
+
+    // Add a rectangle button for VCO2 control
+    var vco2Button = d3.select("#barchart-VO2-VCO2")
+        .append("svg")
+        .attr("width", 60)
+        .attr("height", 20)
+        .style("position", "absolute")
+        .style("top", "-22px") // Adjusted position
+        .style("right", "45px")
+        .style("border-radius", "10px")
+        .style("cursor", "pointer")
+        .on("click", function() {
+            var isActive = d3.select(this).select("rect").classed("active");
+            d3.select(this).select("rect")
+                .classed("active", !isActive)
+                .attr("fill", isActive ? "grey" : "#fe8d09");
+            d3.select(this).select("text")
+                .text(isActive ? "OFF" : "ON");
+            d3.selectAll('.barVCO2').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.vco2-legend').style('display', isActive ? 'none' : 'block');
+            d3.selectAll('.barDifference').filter(d => d.difference < 0).style('display', isActive ? 'none' : 'block');
+        });
+
+    vco2Button.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 60)
+        .attr("height", 30)
+        .attr("fill", "#fe8d09")
+        .classed("active", true);
+
+    vco2Button.append("text")
+        .attr("x", 30)
+        .attr("y", 17)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text("ON");
 }
 // fetchDataEveryMinute(barchartVO2VCO2);
 
@@ -1217,16 +1271,16 @@ function createDifferenceBarChart(data) {
         .attr("y", d => yLeft(Math.max(0, d.difference)))
         .attr("width", x.bandwidth())
         .attr("height", d => Math.abs(yLeft(d.difference) - yLeft(0)))
-        .attr("fill", d => d.difference > 0 ? "green" : "red")
+        .attr("fill", d => d.difference > 0 ? "#408ce3" : "#fe8d09")
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
 
-    // Add legend
-    svg.append("circle").attr("cx", width - 780).attr("cy", 20).attr("r", 6).style("fill", "green");
-    svg.append("circle").attr("cx", width - 780).attr("cy", 50).attr("r", 6).style("fill", "red");
-    svg.append("text").attr("x", width - 760).attr("y", 20).text("VO2 > VCO2").style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", width - 760).attr("y", 50).text("VCO2 > VO2").style("font-size", "15px").attr("alignment-baseline", "middle");
+    // // Add legend
+    // svg.append("circle").attr("cx", width - 780).attr("cy", 20).attr("r", 6).style("fill", "green");
+    // svg.append("circle").attr("cx", width - 780).attr("cy", 50).attr("r", 6).style("fill", "red");
+    // svg.append("text").attr("x", width - 760).attr("y", 20).text("VO2 > VCO2").style("font-size", "15px").attr("alignment-baseline", "middle");
+    // svg.append("text").attr("x", width - 760).attr("y", 50).text("VCO2 > VO2").style("font-size", "15px").attr("alignment-baseline", "middle");
 
     // Add Y axis label
     svg.append("text")
@@ -1359,12 +1413,14 @@ async function fetchMaxValues(filePath, caseNumber) {
             document.getElementById('power-value').textContent = `${roundToTenth(maxPower)} `;
     
             // Compare values and update icons
-            if (caseNumber === 2) {
+            if (caseNumber === 1) {
                 compareMaxValues();
             }
         }
     });
 }
+
+
 
 // Compare the maximum values between the two cases and update the HTML
 function compareMaxValues() {
@@ -1382,6 +1438,7 @@ function compareMaxValues() {
     compareAndUpdate(maxValuesCase1.maxHR, maxValuesCase2.maxHR, 'hr-value');
     compareAndUpdate(maxValuesCase1.maxPower, maxValuesCase2.maxPower, 'power-value');
 }
+
 
 //------------------ZOOM LEVEL---------------------
 function updateZoomLevel(zoomLevel) {
@@ -1430,6 +1487,34 @@ document.getElementById('zoomLevel4').addEventListener('click', () => updateZoom
 // // Initial call to set the default zoom level
 updateZoomLevel(1);
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing code for zoom level button
+    const zoomLevelButton = document.getElementById('zoomLevelButton');
+    const zoomLevels = document.querySelectorAll('.zoom-dropdown .zoom-dropdown-content a');
+
+    zoomLevels.forEach(zoomLevel => {
+        zoomLevel.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedZoomLevel = event.target.textContent.trim();
+            zoomLevelButton.innerHTML = `<i class="bi bi-stopwatch"></i> ${selectedZoomLevel} <i class="bi bi-plus-slash-minus plus-min-icon"></i>`;
+            zoomLevelButton.style.backgroundColor = '#ffcfa0';
+        });
+    });
+
+    // Add event listeners for the compare session dropdown
+    const compareSessionButton = document.querySelector('.dropdown .dropbtn');
+    const compareSessions = document.querySelectorAll('.dropdown .dropdown-content a');
+
+    compareSessions.forEach(compareSession => {
+        compareSession.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedSession = event.target.textContent.trim();
+            compareSessionButton.innerHTML = `${selectedSession} <span class="icon"><i class="bi bi-calendar2 calendar-icon"></i></span>`;
+            compareSessionButton.style.backgroundColor = '#ffcfa0';
+        });
+    });
+});
+
 
 // Define the fetchMaxValuesBySession function
 function fetchMaxValuesBySession(session) {
@@ -1460,6 +1545,54 @@ document.getElementById('session28Jan24').addEventListener('click', () => {
 
 // Initial call to fetch the latest data and set the default zoom level
 fetchMaxValuesBySession(1);
+
+//--------------------------------------------------------------------------------
+async function fetchAthleteData() {
+    try {
+        const response = await fetch('data/personal-data-person1.csv');
+        const csvData = await response.text();
+
+        Papa.parse(csvData, {
+            header: false,
+            skipEmptyLines: true,
+            complete: function(results) {
+                const rows = results.data;
+
+                // Extract the required fields
+                const leeftijd = rows[4][1]; // Row 5, Column 2 (index 4, 1)
+                const lengte = rows[5][1]; // Row 6, Column 2 (index 5, 1)
+                const gewicht = rows[6][1]; // Row 7, Column 2 (index 6, 1)
+                const bmi = rows[10][5]; // Row 8, Column 2 (index 11, 6)
+                const testtijd = rows[1][3]; // Row 2, Column 4 (index 1, 3)
+                const testduur = rows[9][3]; // Row 10, Column 4 (index 9, 2)
+                const ergometer = rows[13][3]; // Row 14, Column 4 (index 13, 3)
+
+                // Display the extracted data
+                console.log(`Leeftijd: ${leeftijd}`);
+                console.log(`Lengte: ${lengte}`);
+                console.log(`Gewicht: ${gewicht}`);
+                console.log(`BMI: ${bmi}`);
+                console.log('---');
+                console.log(`Testduur: ${testduur}`);
+                console.log(`Testtijd: ${testtijd}`);
+                console.log(`Ergometer: ${ergometer}`);
+
+                // Set the text content of existing elements with specific IDs
+                document.getElementById('leeftijd-value').textContent = `Leeftijd: ${leeftijd}`;
+                document.getElementById('lengte-value').textContent = `Lengte: ${lengte} cm`;
+                document.getElementById('gewicht-value').textContent = `Gewicht: ${gewicht} kg`;
+                document.getElementById('testduur-value').textContent = `Testduur: ${testduur}`;
+                document.getElementById('testtijd-value').textContent = `Testtijd: ${testtijd}`;
+                document.getElementById('ergometer-value').textContent = `Ergometer: ${ergometer}`;
+        
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching or parsing CSV data:', error);
+    }
+}
+fetchAthleteData();
+
 
 //--------------------------------------------------------------------------------
 // async function readOldResultsAndPlot() {
