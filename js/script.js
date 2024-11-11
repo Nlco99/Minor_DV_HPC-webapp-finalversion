@@ -1251,7 +1251,7 @@ function createDifferenceBarChart(data) {
         Tooltip
             .html(
                 "Tijd: " + formattedTime + "<br>" +
-                "Difference: " + d.difference.toFixed(2) + " mL/min"
+                "Verchil: " + d.difference.toFixed(2) + " mL/min"
             )
             .style("left", `${event.layerX + 10}px`)
             .style("top", `${event.layerY}px`);
